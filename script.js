@@ -14,7 +14,9 @@ const winningComb=[
 
 ]
 const cells=document.querySelectorAll('.cell');
+
 startGame();
+
 function startGame(){
 	document.querySelector('.endgame').style.display="none";
 	origBoard=Array.from(Array(9).keys());
@@ -22,17 +24,22 @@ function startGame(){
 		cells[i].innerText=" ";
 		cells[i].style.removeProperty('background-color');
 		cells[i].addEventListener('click',turnClick,false);
-		console.log(origBoard=);
+		
 		
 	}
 }
 function turnClick(square){
 	counter++;
 	if(counter%2==0){
-	turn (square.target.id,player1);}
+	turn (square.target.id,player1);
+	chechkWin(origBoard,player1,winningComb);
+}
 	else{
 		turn(square.target.id,player2);
+		chechkWin(origBoard,player2,winningComb);
 	}
+	
+
 	}
 
 	function turn(squareId,player){
@@ -41,7 +48,39 @@ function turnClick(square){
 	
 
 	}
+
+	function chechkWin(board,player,win){
+		
+
+		for(let i=0;i<9;i++){
+			var a=0;
+			for(let j=0;j<3;j++){
+				var o=win[i][j];
+
+				if (board[o]==player){
+					 a++;
+					}
+				if(a==3){
+					alert("Pobijedio je "+player+" igrac");
+					gameOver();
+				}
+				
+			}
+
+		}
+
+
+		//if(board[0]==player && board[1]==player && board[2]==player){
+		//	alert("Pobijedio je igrac sa "+player);
+		//}
+	}
 	
+	function gameOver(){
+		for(i=0;i<cells.length;i++){
+			cells[i].removeEventListener('click',turnClick,false);
+
+		}
+	}
 
 
 
